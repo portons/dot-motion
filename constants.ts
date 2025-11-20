@@ -1,3 +1,4 @@
+
 import { AnimationMode, XYTEUseCase, AnimationConfig } from './types';
 
 export const MOUSE_RADIUS = 100;
@@ -21,6 +22,14 @@ export const XYTE_CASES: XYTEUseCase[] = [
     icon: "loader",
     width: 500,
     height: 500
+  },
+  {
+    id: AnimationMode.CORE_MINDMAP,
+    label: "Entity Graph",
+    description: "Visualizing relationships.",
+    icon: "share-2",
+    width: 600,
+    height: 450
   },
   {
     id: AnimationMode.CORE_SUCCESS,
