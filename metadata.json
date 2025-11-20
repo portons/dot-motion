@@ -1,0 +1,5 @@
+{
+  "name": "XYTE Dot Motion",
+  "description": "A generative SVG animation library featuring fluid, minimalist dot-based visuals tailored for XYTE interface states.",
+  "requestFramePermissions": []
+}
