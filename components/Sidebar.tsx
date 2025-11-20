@@ -1,114 +1,64 @@
 import React from 'react';
 import { 
-  Activity, Mic, Loader, ArrowUp, CheckCircle, AlertTriangle, 
-  Share2, BarChart2, Terminal, Zap, DownloadCloud, Link, Shield,
-  PlayCircle
+  Loader, CheckCircle, AlertTriangle, XCircle, Search
 } from 'lucide-react';
-import { XYTE_CASES, DEMO_FLOWS } from '../constants';
+import { XYTE_CASES } from '../constants';
 import { AnimationMode } from '../types';
 
 interface SidebarProps {
-  currentMode: AnimationMode | string;
+  currentMode: AnimationMode;
   onModeChange: (mode: AnimationMode) => void;
-  onFlowStart: (flowId: string) => void;
 }
 
 const IconMap: Record<string, React.ElementType> = {
-  'activity': Activity,
-  'mic': Mic,
   'loader': Loader,
-  'arrow-up': ArrowUp,
   'check-circle': CheckCircle,
   'alert-triangle': AlertTriangle,
-  'share-2': Share2,
-  'bar-chart-2': BarChart2,
-  'terminal': Terminal,
-  'zap': Zap,
-  'download-cloud': DownloadCloud,
-  'link': Link,
-  'shield': Shield
+  'x-circle': XCircle,
+  'search': Search
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ currentMode, onModeChange, onFlowStart }) => {
-  // Group cases by category
-  const categories = Array.from(new Set(XYTE_CASES.map(c => c.category)));
-
+const Sidebar: React.FC<SidebarProps> = ({ currentMode, onModeChange }) => {
   return (
     <aside className="w-80 bg-zinc-50 h-full border-r border-zinc-200 flex flex-col p-6 overflow-y-auto">
       <div className="mb-8">
         <h1 className="text-2xl font-bold tracking-tighter mb-1">XYTE</h1>
-        <p className="text-xs text-zinc-400 uppercase tracking-widest">Dot Motion Lib</p>
+        <p className="text-xs text-zinc-400 uppercase tracking-widest">Core States</p>
       </div>
 
-      <div className="flex-1 space-y-8">
-        {categories.map(category => (
-          <div key={category}>
-            <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-3 px-2">
-              {category}
-            </h3>
-            <nav className="space-y-1">
-              {XYTE_CASES.filter(c => c.category === category).map((useCase) => {
-                const Icon = IconMap[useCase.icon];
-                const isActive = currentMode === useCase.id;
-                
-                return (
-                  <button
-                    key={useCase.id}
-                    onClick={() => onModeChange(useCase.id)}
-                    className={`w-full text-left p-3 rounded-lg transition-all duration-300 group relative overflow-hidden ${
-                      isActive 
-                        ? 'bg-black text-white shadow-lg shadow-zinc-300' 
-                        : 'hover:bg-white hover:shadow-sm text-zinc-600'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3 relative z-10">
-                      <Icon size={16} className={isActive ? 'text-white' : 'text-zinc-400 group-hover:text-black'} />
-                      <span className="font-medium text-sm">{useCase.label}</span>
-                    </div>
-                  </button>
-                );
-              })}
-            </nav>
-          </div>
-        ))}
-
-        {/* Flows Section */}
-        <div>
-             <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-3 px-2">
-              Demo Flows
-            </h3>
-            <nav className="space-y-1">
-                {DEMO_FLOWS.map((flow) => {
-                    const isActive = currentMode === flow.id;
-                    return (
-                        <button
-                            key={flow.id}
-                            onClick={() => onFlowStart(flow.id)}
-                            className={`w-full text-left p-3 rounded-lg transition-all duration-300 group relative overflow-hidden ${
-                                isActive 
-                                    ? 'bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-200' 
-                                    : 'hover:bg-white hover:shadow-sm text-zinc-600'
-                            }`}
-                        >
-                            <div className="flex items-center gap-3 relative z-10">
-                                <PlayCircle size={16} className={isActive ? 'text-white' : 'text-blue-400 group-hover:text-blue-600'} />
-                                <div className="flex flex-col">
-                                    <span className="font-medium text-sm">{flow.label}</span>
-                                    <span className={`text-[10px] ${isActive ? 'text-blue-100' : 'text-zinc-400'}`}>Automated Sequence</span>
-                                </div>
-                            </div>
-                        </button>
-                    )
-                })}
-            </nav>
-        </div>
-
+      <div className="flex-1 space-y-2">
+        {XYTE_CASES.map((useCase) => {
+          const Icon = IconMap[useCase.icon];
+          const isActive = currentMode === useCase.id;
+          
+          return (
+            <button
+              key={useCase.id}
+              onClick={() => onModeChange(useCase.id)}
+              className={`w-full text-left p-4 rounded-xl transition-all duration-300 group relative overflow-hidden border ${
+                isActive 
+                  ? 'bg-white border-zinc-300 shadow-xl shadow-zinc-200/50 scale-[1.02]' 
+                  : 'bg-transparent border-transparent hover:bg-white hover:border-zinc-200 hover:shadow-sm'
+              }`}
+            >
+              <div className="flex items-start gap-4 relative z-10">
+                <div className={`p-2 rounded-lg ${isActive ? 'bg-zinc-900 text-white' : 'bg-zinc-100 text-zinc-500 group-hover:text-zinc-900'}`}>
+                  <Icon size={18} />
+                </div>
+                <div>
+                  <span className={`font-bold text-sm block ${isActive ? 'text-zinc-900' : 'text-zinc-600'}`}>{useCase.label}</span>
+                  <span className="text-xs text-zinc-400 mt-1 leading-tight block pr-2">{useCase.description}</span>
+                </div>
+              </div>
+            </button>
+          );
+        })}
       </div>
 
       <div className="mt-auto pt-6 border-t border-zinc-200">
         <div className="flex items-center gap-2 text-xs text-zinc-400">
            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-           <span>Connected to Engine</span>
+           <span>System Active</span>
         </div>
       </div>
     </aside>

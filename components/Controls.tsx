@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { X, Settings2, RefreshCw, Play, Check, AlertTriangle, Pause } from 'lucide-react';
-import { AnimationConfig, AnimationStatus } from '../types';
+import { X, Settings2, RefreshCw } from 'lucide-react';
+import { AnimationConfig } from '../types';
 
 interface ControlsProps {
   config: AnimationConfig;
@@ -48,41 +48,6 @@ const Controls: React.FC<ControlsProps> = ({ config, onChange, onReset }) => {
       {/* Body */}
       <div className="p-5 space-y-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
         
-        {/* Section: Simulation Status */}
-        <div className="space-y-3">
-           <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Simulation State</label>
-           <div className="grid grid-cols-4 gap-2">
-              <button 
-                onClick={() => update('status', AnimationStatus.IDLE)}
-                className={`flex flex-col items-center justify-center p-2 rounded border transition-all ${config.status === AnimationStatus.IDLE ? 'bg-zinc-100 border-zinc-400' : 'border-zinc-100 hover:bg-zinc-50'}`}
-                title="Idle"
-              >
-                <Pause size={12} />
-              </button>
-              <button 
-                onClick={() => update('status', AnimationStatus.ACTIVE)}
-                className={`flex flex-col items-center justify-center p-2 rounded border transition-all ${config.status === AnimationStatus.ACTIVE ? 'bg-blue-50 border-blue-200 text-blue-500' : 'border-zinc-100 hover:bg-zinc-50'}`}
-                title="Active / In Progress"
-              >
-                <Play size={12} />
-              </button>
-              <button 
-                onClick={() => update('status', AnimationStatus.SUCCESS)}
-                className={`flex flex-col items-center justify-center p-2 rounded border transition-all ${config.status === AnimationStatus.SUCCESS ? 'bg-emerald-50 border-emerald-200 text-emerald-500' : 'border-zinc-100 hover:bg-zinc-50'}`}
-                title="Success"
-              >
-                <Check size={12} />
-              </button>
-              <button 
-                onClick={() => update('status', AnimationStatus.ERROR)}
-                className={`flex flex-col items-center justify-center p-2 rounded border transition-all ${config.status === AnimationStatus.ERROR ? 'bg-red-50 border-red-200 text-red-500' : 'border-zinc-100 hover:bg-zinc-50'}`}
-                title="Error"
-              >
-                <AlertTriangle size={12} />
-              </button>
-           </div>
-        </div>
-
         {/* Section: Physics */}
         <div className="space-y-3">
           <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Physics Engine</label>
@@ -182,7 +147,7 @@ const Controls: React.FC<ControlsProps> = ({ config, onChange, onReset }) => {
               <span>Accent Color</span>
             </div>
             <div className="flex gap-2 flex-wrap">
-                {['#10b981', '#3b82f6', '#ef4444', '#f59e0b', '#8b5cf6', '#ec4899'].map(color => (
+                {['#0ea5e9', '#10b981', '#3b82f6', '#ef4444', '#f59e0b', '#8b5cf6'].map(color => (
                     <button
                         key={color}
                         onClick={() => update('accentColor', color)}
